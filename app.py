@@ -14,7 +14,7 @@ class MemberSchema(ma.Schema):
     age = fields.Integer(required=True, validate=validate.Range(min=0))
 
     class Meta:
-        fields = ("name", "age", "id")
+        fields = ("name", "age")
 
 class WorkoutSessionSchema(ma.Schema):
     member_id = fields.Integer(required=True)
@@ -23,7 +23,7 @@ class WorkoutSessionSchema(ma.Schema):
     calories_burned = fields.Integer(required=True, validate=validate.Range(min=1))
 
     class Meta:
-        fields = ("member_id", "session_date", "duration_minutes", "calories_burned", "session_id")
+        fields = ("member_id", "session_date", "duration_minutes", "calories_burned")
 
 member_schema = MemberSchema()
 members_schema = MemberSchema(many=True)
@@ -42,9 +42,9 @@ class WorkoutSessions(db.Model):
     __tablename__ = 'WorkoutSessions'
     session_id = db.Column(db.Integer, primary_key=True)
     member_id = db.Column(db.Integer, db.ForeignKey('Members.id'))
-    session_date = db.Columm(db.Date, nullable=False)
+    session_date = db.Column(db.Date, nullable=False)
     duration_minutes = db.Column(db.Integer)
-    calories_burned = db.Columm(db.Integer)
+    calories_burned = db.Column(db.Integer)
 
 
 @app.route('/members', methods=['POST'])
